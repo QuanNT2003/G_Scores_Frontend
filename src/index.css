@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+.frame {
+    @apply my-6 mx-auto py-4 px-8 text-wrap w-[90%] min-h-20 rounded-lg bg-white;
+}
+
+.border-custom {
+    border: 1px solid var(--border-color);
+}
+
+.number-nospin {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 15px solid white;
+}
+
+.type {
+    @apply px-2 bg-slate-300 rounded-2xl mx-2;
+}
+
+.active {
+    @apply flex h-14 font-bold items-center ps-6 transition-all mb-1 text-wrap;
+}
+
+.navlink {
+    @apply flex h-14 hover:font-bold items-center ps-6 transition-all mb-1 text-wrap;
+}
