@@ -9,3 +9,23 @@ export const getScore = async (id) => {
         return Promise.reject(error);
     }
 };
+
+export const getReportScore = async (subject) => {
+    try {
+        const res = await request.getMethod('scores/report/' + subject);
+        // console.log(res);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+export const getTopGroupA = async () => {
+    try {
+        const res = await request.getMethod('scores/report/top_group_a');
+        // console.log(res);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};

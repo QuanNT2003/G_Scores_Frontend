@@ -8,7 +8,7 @@ function Header() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     return (
-        <div className="h-24 bg-[#0f2289] w-full flex justify-center items-center text-[30px] font-bold text-white">
+        <div className="min-h-[10vh] bg-[#0f2289] w-full flex justify-center items-center text-[30px] font-bold text-white">
             <div
                 onClick={handleOpen}
                 className="sm:hidden cursor-pointer border-2 mx-4 p-2 px-3 border-white rounded-md hover:border-black"
