@@ -36,6 +36,7 @@ function Input({
     rows,
     items,
     password,
+    placeholder,
     ...passProps
 }) {
     // PASSWORD
@@ -118,6 +119,7 @@ function Input({
                                 'm-h': rows,
                                 't-a': money,
                             })}
+                            placeholder={placeholder}
                             value={value}
                             onChange={(e) => {
                                 if (money) {

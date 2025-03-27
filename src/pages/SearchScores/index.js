@@ -1,14 +1,42 @@
-import { TextField } from '@mui/material';
 import { useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+
+import Input from '~/components/Input';
+import * as ScoreServices from '~/apiServices/scoreServices';
+import ScoreTable from '~/components/ScoreTable';
 function SearchScore() {
     const [registrationNumber, setRegistrationNumber] = useState('');
+    const [errorRegistrationNumber, setErrorRegistrationNumber] = useState('');
+    const onChangeRegistrationNumber = (value) => {
+        setRegistrationNumber(value);
+        setErrorRegistrationNumber('');
+    };
+    const [obj, setObj] = useState(null);
+    const [notFound, setNotFound] = useState('');
+    const submit = () => {
+        if (registrationNumber === '' || registrationNumber === ' ') {
+            setErrorRegistrationNumber('You need to enter student code');
+        } else {
+            setErrorRegistrationNumber('');
+            const fetchApi = async () => {
+                const result = await ScoreServices.getScore(
+                    registrationNumber,
+                ).catch((error) => {
+                    console.log(error);
+                });
+
+                if (result) {
+                    console.log(result.data);
+                    if (result.data === false)
+                        setNotFound(
+                            `Student code ${registrationNumber} information not found`,
+                        );
+                    setObj(result.data);
+                }
+            };
+
+            fetchApi();
+        }
+    };
     return (
         <div>
             <div className="frame">
@@ -17,81 +45,25 @@ function SearchScore() {
                 </div>
                 <div className="sm:flex justify-start items-end">
                     <div className="sm:w-[40%] sm:me-2 mb-2 sm:mb-0">
-                        <div className="my-2">Registration number</div>
-                        <TextField
-                            label="Enter registration number"
-                            fullWidth
-                            onChange={setRegistrationNumber}
+                        <Input
+                            placeholder="Enter registration number"
+                            title={'Registration number'}
+                            onChange={onChangeRegistrationNumber}
                             value={registrationNumber}
+                            error={errorRegistrationNumber}
                         />
                     </div>
-                    <button className="h-[56px] sm:mx-3 bg-black hover:bg-slate-800 text-white p-4 px-8 rounded">
+                    <button
+                        className="h-[40px] sm:mx-3 bg-black hover:bg-slate-800 text-white px-8 rounded"
+                        onClick={() => submit()}
+                    >
                         Submit
                     </button>
                 </div>
             </div>
             <div className="frame">
                 <div className="text-[24px] font-semibold">Detailed Scores</div>
-                <div className="my-3">Detailed view of search scores here!</div>
-                <div>
-                    <div className="my-3 flex justify-center items-center">
-                        View detailed search scores of student code: 10001
-                    </div>
-                    <TableContainer>
-                        <Table sx={{ minWidth: 650 }}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Subject</TableCell>
-                                    <TableCell align="center">Math</TableCell>
-                                    <TableCell align="center">
-                                        Literature
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        Foreign language
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        Physics
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        Chemistry
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        Biology
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        Foreign language code
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        Score
-                                    </TableCell>
-                                    <TableCell align="center">10</TableCell>
-                                    <TableCell align="center">10</TableCell>
-                                    <TableCell align="center">10</TableCell>
-                                    <TableCell align="center">10</TableCell>
-                                    <TableCell align="center">10</TableCell>
-                                    <TableCell align="center">10</TableCell>
-                                    <TableCell align="center">N1</TableCell>
-                                </TableRow>
-                                {/* {rows.map((row) => (
-            
-          ))} */}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
-                <div className="my-3 flex justify-center items-center">
-                    Student code 100001 information not found
-                </div>
+                <ScoreTable obj={obj} notFound={notFound} />
             </div>
         </div>
     );
