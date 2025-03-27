@@ -1,7 +1,7 @@
 import { DefaultLayout } from './components/layouts';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from '~/routes';
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import './index.css';
 
 function App() {
