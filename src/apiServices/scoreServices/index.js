@@ -29,3 +29,25 @@ export const getTopGroupA = async () => {
         return Promise.reject(error);
     }
 };
+
+export const getGreaterThan5 = async (subject) => {
+    try {
+        const res = await request.getMethod(
+            'scores/get_greater_than_5/' + subject,
+        );
+        // console.log(res);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+export const getNumberExamType = async () => {
+    try {
+        const res = await request.getMethod('scores/exam_type');
+        // console.log(res);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
